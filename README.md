@@ -64,14 +64,14 @@ For NetBSD, part of the preliminary metadata was obtained through private commun
 
 ## Candidate Bug Filtering
 
-The final function-level datasets were not constructed by directly accepting all candidate bug IDs from prior studies. Candidate bugs were checked against official bug/fix information, source-code context, software version availability, and the file-level aging-file scope from prior ARB studies.
+The final function-level datasets were not constructed by directly accepting all candidate bug IDs from prior studies. Candidate bugs were checked against official bug/fix information, software version availability, and the file-level aging-file scope from prior ARB studies.
 
 A candidate bug/function entry was retained only when all of the following conditions were satisfied:
 
 1. the affected file was within the file-level aging-file scope used by prior ARB studies;
 2. the corresponding official bug/fix information was available;
 3. the affected version could be mapped to an officially released and downloadable version;
-4. the available fix information or source-code context provided sufficient function-level evidence.
+4. the available fix information provided sufficient function-level evidence.
 
 Candidate entries were excluded when the affected file was outside the file-level aging-file scope, the version was only a test/release-candidate/non-official version without a suitable official-release mapping, or the available documents did not provide sufficient function-level evidence.
 
@@ -107,23 +107,81 @@ Candidate entries were excluded when the affected file was outside the file-leve
 
 ### MySQL Candidate Bug Filtering
 
-The original file-level ARB resources contained 13 candidate aging-related MySQL bugs. During function-level dataset construction, each candidate bug was checked against version availability, official fix information, source-code context, and the file-level ARB scope. The final function-level annotations were retained only when the affected version was available and the corresponding file/function evidence could be matched to the file-level ARB resources.
+The original file-level ARB resources contained 13 candidate aging-related MySQL bugs. During function-level dataset construction, each candidate bug was checked against version availability, official fix information, and the file-level ARB scope. The final function-level annotations were retained only when the affected version was available and the corresponding file/function evidence could be matched to the file-level ARB resources.
 
-| Bug ID | Original/Related Version | Status                             | Final Version/File/Function or Filtering Reason                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| ------ | ------------------------ | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 34335  | 5.1.23                   | Excluded                           | The corresponding MySQL version is no longer downloadable/available.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| 32709  | before 5.1.29            | Excluded                           | The affected version range could not be mapped to an available downloadable version.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| 33247  | before 5.1.24            | Excluded                           | The affected version range could not be mapped to an available downloadable version.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| 38191  | 5.1.28, 6.0.6            | Excluded                           | The corresponding versions are no longer downloadable/available.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| 40013  | fixed in 5.1.33          | Included                           | 5.1.32 / `sql/sql_class.cc` / `THD::cleanup(void)`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| 40386  | 5.1.30                   | Included                           | 5.1.30 / `storage/innobase/handler/ha_innodb.cc` / `ha_innobase::open()`; 5.1.30 / `storage/innobase/handler/ha_innodb.cc` / `ha_innobase::close(void)`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| 45989  | 5.1.43                   | Included with file-scope filtering | Retained functions in `sql/sql_select.cc`: `sub_select`; `evaluate_join_record`; `end_write_group`; `copy_fields`; `do_select`; `JOIN::cleanup`; `JOIN::destroy`; `mysql_select`; `mysql_explain_union`; `JOIN::exec()`. Other mentioned files, including `field_conv.cc`, `sql_string.cc`, and `sql_string.h`, were excluded because they were not included as aging files in the file-level ARB ARFF resources.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| 46656  | 5.1.37                   | Included with file-scope filtering | Retained functions: `storage/innobase/srv/srv0start.c` / `innobase_start_or_create_for_mysql`; `sql/sql_table.cc` / `mysql_rm_table_part2`; `sql/sql_table.cc` / `mysql_rm_table`; `storage/innobase/ut/ut0mem.c` / `ut_realloc`; `storage/innobase/ut/ut0mem.c` / `ut_malloc`; `storage/innobase/ut/ut0mem.c` / `ut_malloc_low`; `storage/innobase/pars/lexyy.c` / `yylex`; `storage/innobase/pars/lexyy.c` / `string_append`; `storage/innobase/pars/srv0srv.c` / `srv_general_init`; `storage/innobase/pars/srv0srv.c` / `srv_boot`; `storage/innobase/pars/mem0dbg.c` / `mem_init`; `storage/innobase/pars/thr0loc.c` / `thr_local_init`; `storage/innobase/row/row0mysql.c` / `row_drop_table_for_mysql`. Other involved files, including `mem0pool.c`, `pars0pars.c`, `pars0grm.c`, `que0que.c`, `mem0mem.c`, `hash0hash.c`, `handler.cc`, `sql_plugin.cc`, `sql_parse.cc`, `mysqld.cc`, and other non-matched files, were excluded because they were not marked as aging files in the file-level ARB ARFF resources. |
-| 48993  | 5.1.45                   | Included                           | 5.1.45 / `client/mysqlbinlog.cc` / `main`; 5.1.45 / `client/mysqlbinlog.cc` / `parse_args`; 5.1.45 / `client/mysqlbinlog.cc` / `process_event`; 5.1.45 / `sql/log_event.cc` / `Log_event::read_log_event`; 5.1.45 / `sql/log_event.cc` / `Query_log_event::print_query_header`; 5.1.45 / `sql/log_event.cc` / `Query_log_event::print`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| 49535  | 5.1.45                   | Included with extraction filtering | 5.1.45 / `storage/innodb_plugin/log/log0recv.c` / `recv_scan_log_recs`. Another related function was excluded because it only appeared in `mem0mem.ic` and could not be reliably extracted as a function-level graph sample.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| 52814  | 5.1.48                   | Included                           | 5.1.48 / `storage/innobase/handler/ha_innodb.cc` / `thd_to_trx(THD* thd)`; 5.1.48 / `storage/innobase/handler/ha_innodb.cc` / `innobase_close_connection`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| 56340  | 5.1.52                   | Included                           | 5.1.52 / `storage/innodb_plugin/row/row0mysql.c` / `row_update_for_mysql`; 5.1.52 / `storage/innodb_plugin/row/row0mysql.c` / `row_update_statistics_if_needed`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| 56709  | 5.1.48                   | Included with file-scope filtering | 5.1.48 / `sql/item_timefunc.cc` / `Item_extract::fix_length_and_dec()`; 5.1.48 / `sql/item_timefunc.cc` / `Item_extract::val_int()`. Other mentioned files, including `dbug.c` and `sql_load.cc`, were excluded because `dbug.c` was outside the ARB component scope and `sql_load.cc` was not marked as an aging file in the file-level ARB resources.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Bug ID | Original/Related Version | Status                             | Final Version/File/Function or Filtering Reason                                                                                                     |
+| ------ | ------------------------ | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 34335  | 5.1.23                   | Excluded                           | The corresponding MySQL version is no longer downloadable or available.                                                                             |
+| 32709  | before 5.1.29            | Excluded                           | The affected version range could not be mapped to an available downloadable version.                                                                |
+| 33247  | before 5.1.24            | Excluded                           | The affected version range could not be mapped to an available downloadable version.                                                                |
+| 38191  | 5.1.28, 6.0.6            | Excluded                           | The corresponding versions are no longer downloadable or available.                                                                                 |
+| 40013  | fixed in 5.1.33          | Included                           | `5.1.32 / sql/sql_class.cc / THD::cleanup(void)`                                                                                                    |
+| 40386  | 5.1.30                   | Included                           | `5.1.30 / storage/innobase/handler/ha_innodb.cc / ha_innobase::open()`; `5.1.30 / storage/innobase/handler/ha_innodb.cc / ha_innobase::close(void)` |
+| 45989  | 5.1.43                   | Included with file-scope filtering | See details below.                                                                                                                                  |
+| 46656  | 5.1.37                   | Included with file-scope filtering | See details below.                                                                                                                                  |
+
+#### Details for MySQL Bug 45989
+
+Bug 45989 was retained with file-scope filtering. The retained aging-related file is:
+
+* `sql/sql_select.cc`
+
+The retained functions are:
+
+* `sub_select`
+* `evaluate_join_record`
+* `end_write_group`
+* `copy_fields`
+* `do_select`
+* `JOIN::cleanup`
+* `JOIN::destroy`
+* `mysql_select`
+* `mysql_explain_union`
+* `JOIN::exec()`
+
+The following mentioned files were excluded because they were not included as aging files in the file-level ARB ARFF resources:
+
+* `field_conv.cc`
+* `sql_string.cc`
+* `sql_string.h`
+
+#### Details for MySQL Bug 46656
+
+Bug 46656 was retained with file-scope filtering. The retained file/function pairs are:
+
+| File                               | Function                             |
+| ---------------------------------- | ------------------------------------ |
+| `storage/innobase/srv/srv0start.c` | `innobase_start_or_create_for_mysql` |
+| `sql/sql_table.cc`                 | `mysql_rm_table_part2`               |
+| `sql/sql_table.cc`                 | `mysql_rm_table`                     |
+| `storage/innobase/ut/ut0mem.c`     | `ut_realloc`                         |
+| `storage/innobase/ut/ut0mem.c`     | `ut_malloc`                          |
+| `storage/innobase/ut/ut0mem.c`     | `ut_malloc_low`                      |
+| `storage/innobase/pars/lexyy.c`    | `yylex`                              |
+| `storage/innobase/pars/lexyy.c`    | `string_append`                      |
+| `storage/innobase/pars/srv0srv.c`  | `srv_general_init`                   |
+| `storage/innobase/pars/srv0srv.c`  | `srv_boot`                           |
+| `storage/innobase/pars/mem0dbg.c`  | `mem_init`                           |
+| `storage/innobase/pars/thr0loc.c`  | `thr_local_init`                     |
+| `storage/innobase/row/row0mysql.c` | `row_drop_table_for_mysql`           |
+| 48993 | 5.1.45 | Included | `5.1.45 / client/mysqlbinlog.cc / main`; `5.1.45 / client/mysqlbinlog.cc / parse_args`; `5.1.45 / client/mysqlbinlog.cc / process_event`; `5.1.45 / sql/log_event.cc / Log_event::read_log_event`; `5.1.45 / sql/log_event.cc / Query_log_event::print_query_header`; `5.1.45 / sql/log_event.cc / Query_log_event::print` |
+| 49535 | 5.1.45 | Included with extraction filtering | `5.1.45 / storage/innodb_plugin/log/log0recv.c / recv_scan_log_recs`. Another related function was excluded because it only appeared in `mem0mem.ic` and could not be reliably extracted as a function-level graph sample. |
+| 52814 | 5.1.48 | Included | `5.1.48 / storage/innobase/handler/ha_innodb.cc / thd_to_trx(THD* thd)`; `5.1.48 / storage/innobase/handler/ha_innodb.cc / innobase_close_connection` |
+| 56340 | 5.1.52 | Included | `5.1.52 / storage/innodb_plugin/row/row0mysql.c / row_update_for_mysql`; `5.1.52 / storage/innodb_plugin/row/row0mysql.c / row_update_statistics_if_needed` |
+| 56709 | 5.1.48 | Included with file-scope filtering | `5.1.48 / sql/item_timefunc.cc / Item_extract::fix_length_and_dec()`; `5.1.48 / sql/item_timefunc.cc / Item_extract::val_int()`. Other mentioned files, including `dbug.c` and `sql_load.cc`, were excluded because `dbug.c` was outside the ARB component scope and `sql_load.cc` was not marked as an aging file in the file-level ARB resources. |
+
+The following involved files were excluded because they were not marked as aging files in the file-level ARB ARFF resources:
+
+* `mem0pool.c`
+* `pars0pars.c`
+* `pars0grm.c`
+* `que0que.c`
+* `mem0mem.c`
+* `hash0hash.c`
+* `handler.cc`
+* `sql_plugin.cc`
+* `sql_parse.cc`
+* `mysqld.cc`
 
 ### NetBSD Candidate Bug Filtering
 
@@ -145,13 +203,13 @@ The function-level positive samples in this study were manually derived from fil
    A candidate bug was retained only if its official fix information involved at least one file that was also marked as an aging-related file in the prior file-level ARB resources. If the official fix documents only referred to files outside the file-level aging-file scope, the candidate bug was excluded from the final function-level dataset.
 
 4. **Identify aging-related functions.**
-   For retained bugs, the official fix information and source-code context were further examined to identify the specific functions involved in the aging-related behavior or fix. If the official documents or patch context clearly indicated the affected function(s), these functions were annotated as aging-related functions.
+   For retained bugs, the official fix information were further examined to identify the specific functions involved in the aging-related behavior or fix. If the official documents clearly indicated the affected function(s), these functions were annotated as aging-related functions.
 
 5. **Exclude bugs without function-level evidence.**
    If a candidate bug was associated with an aging-related file but the available official fix information did not provide sufficient evidence to localize the issue to one or more specific functions, the bug was excluded from the function-level positive sample set.
 
 6. **Retain multiple functions when justified.**
-   A single bug may correspond to multiple aging-related functions. When the official fix and source-code context indicated that multiple functions were involved in the aging-related behavior or fix, all confirmed functions were retained as independent positive samples.
+   A single bug may correspond to multiple aging-related functions. When the official fix indicated that multiple functions were involved in the aging-related behavior or fix, all confirmed functions were retained as independent positive samples.
 
 7. **Prefer reproducible official releases.**
    When a bug was only present in test, release-candidate, or non-official versions and could not be mapped to an officially released and downloadable version, it was excluded from the final dataset to improve reproducibility.
@@ -160,7 +218,7 @@ In summary, a function was annotated as an aging-related function only when all 
 
 * the corresponding file was included in the file-level aging-file scope from prior ARB studies;
 * the candidate bug was supported by official bug/fix information;
-* the official fix or source-code context provided sufficient evidence to associate the aging-related behavior or fix with the function;
+* the official fix provided sufficient evidence to associate the aging-related behavior or fix with the function;
 * the corresponding software version was available as an official release.
 
 ---
