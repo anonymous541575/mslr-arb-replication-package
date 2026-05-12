@@ -119,6 +119,11 @@ The original file-level ARB resources contained 13 candidate aging-related MySQL
 | 40386  | 5.1.30                   | Included                           | `5.1.30 / storage/innobase/handler/ha_innodb.cc / ha_innobase::open()`; `5.1.30 / storage/innobase/handler/ha_innodb.cc / ha_innobase::close(void)` |
 | 45989  | 5.1.43                   | Included with file-scope filtering | See details below.                                                                                                                                  |
 | 46656  | 5.1.37                   | Included with file-scope filtering | See details below.                                                                                                                                  |
+| 48993 | 5.1.45 | Included | `5.1.45 / client/mysqlbinlog.cc / main`; `5.1.45 / client/mysqlbinlog.cc / parse_args`; `5.1.45 / client/mysqlbinlog.cc / process_event`; `5.1.45 / sql/log_event.cc / Log_event::read_log_event`; `5.1.45 / sql/log_event.cc / Query_log_event::print_query_header`; `5.1.45 / sql/log_event.cc / Query_log_event::print` |
+| 49535 | 5.1.45 | Included with extraction filtering | `5.1.45 / storage/innodb_plugin/log/log0recv.c / recv_scan_log_recs`. Another related function was excluded because it only appeared in `mem0mem.ic` and could not be reliably extracted as a function-level graph sample. |
+| 52814 | 5.1.48 | Included | `5.1.48 / storage/innobase/handler/ha_innodb.cc / thd_to_trx(THD* thd)`; `5.1.48 / storage/innobase/handler/ha_innodb.cc / innobase_close_connection` |
+| 56340 | 5.1.52 | Included | `5.1.52 / storage/innodb_plugin/row/row0mysql.c / row_update_for_mysql`; `5.1.52 / storage/innodb_plugin/row/row0mysql.c / row_update_statistics_if_needed` |
+| 56709 | 5.1.48 | Included with file-scope filtering | `5.1.48 / sql/item_timefunc.cc / Item_extract::fix_length_and_dec()`; `5.1.48 / sql/item_timefunc.cc / Item_extract::val_int()`. Other mentioned files, including `dbug.c` and `sql_load.cc`, were excluded because `dbug.c` was outside the ARB component scope and `sql_load.cc` was not marked as an aging file in the file-level ARB resources. |
 
 #### Details for MySQL Bug 45989
 
@@ -164,11 +169,7 @@ Bug 46656 was retained with file-scope filtering. The retained file/function pai
 | `storage/innobase/pars/mem0dbg.c`  | `mem_init`                           |
 | `storage/innobase/pars/thr0loc.c`  | `thr_local_init`                     |
 | `storage/innobase/row/row0mysql.c` | `row_drop_table_for_mysql`           |
-| 48993 | 5.1.45 | Included | `5.1.45 / client/mysqlbinlog.cc / main`; `5.1.45 / client/mysqlbinlog.cc / parse_args`; `5.1.45 / client/mysqlbinlog.cc / process_event`; `5.1.45 / sql/log_event.cc / Log_event::read_log_event`; `5.1.45 / sql/log_event.cc / Query_log_event::print_query_header`; `5.1.45 / sql/log_event.cc / Query_log_event::print` |
-| 49535 | 5.1.45 | Included with extraction filtering | `5.1.45 / storage/innodb_plugin/log/log0recv.c / recv_scan_log_recs`. Another related function was excluded because it only appeared in `mem0mem.ic` and could not be reliably extracted as a function-level graph sample. |
-| 52814 | 5.1.48 | Included | `5.1.48 / storage/innobase/handler/ha_innodb.cc / thd_to_trx(THD* thd)`; `5.1.48 / storage/innobase/handler/ha_innodb.cc / innobase_close_connection` |
-| 56340 | 5.1.52 | Included | `5.1.52 / storage/innodb_plugin/row/row0mysql.c / row_update_for_mysql`; `5.1.52 / storage/innodb_plugin/row/row0mysql.c / row_update_statistics_if_needed` |
-| 56709 | 5.1.48 | Included with file-scope filtering | `5.1.48 / sql/item_timefunc.cc / Item_extract::fix_length_and_dec()`; `5.1.48 / sql/item_timefunc.cc / Item_extract::val_int()`. Other mentioned files, including `dbug.c` and `sql_load.cc`, were excluded because `dbug.c` was outside the ARB component scope and `sql_load.cc` was not marked as an aging file in the file-level ARB resources. |
+
 
 The following involved files were excluded because they were not marked as aging files in the file-level ARB ARFF resources:
 
