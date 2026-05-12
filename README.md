@@ -346,7 +346,7 @@ Joern was used to extract program graphs during data construction. Since the pre
 
 ## Reproducing the Main Results
 
-All data files, including. pkl and. json, as well as the code file. py, are included in the uploaded MSLR_LARB. zip compressed file. All main results are obtained with 5-fold cross-validation using a fixed threshold of 0.5.
+All data files, including.pkl and.json, as well as the code file.py, are included in the uploaded MSLR_ARB.zip compressed file. All main results are obtained with 5-fold cross-validation using a fixed threshold of 0.5.
 
 ### Dataset Files
 
