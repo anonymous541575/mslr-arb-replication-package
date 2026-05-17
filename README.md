@@ -186,7 +186,7 @@ The following involved files were excluded because they were not marked as aging
 
 ### NetBSD Candidate Bug Filtering
 
-For NetBSD, all candidate bugs used in this study correspond to NetBSD 7.99.21. The official problem reports and fix information provided sufficient function-level evidence for the corresponding faulty functions. However, three candidate functions could not be reliably extracted as Joern-based function-level graph samples due to tool extraction issues: usr.bin/msgs/msgs.c ask, `usr.sbin/sysinst/disks.c make_filesystems`, and `usr.sbin/sysinst/disks.c fsck_preen`. These functions were therefore excluded from the final preprocessed graph dataset. All other NetBSD candidate functions with sufficient function-level evidence were successfully extracted and retained. The final NetBSD dataset contains 17 positive functions and 85 negative functions.
+For NetBSD, all candidate bugs used in this study correspond to NetBSD 7.99.21. The official problem reports and fix information provided sufficient function-level evidence for the corresponding faulty functions. However, three candidate functions could not be reliably extracted as Joern-based function-level graph samples due to tool extraction issues:`usr.bin/msgs/msgs.c ask`, `usr.sbin/sysinst/disks.c make_filesystems`, and `usr.sbin/sysinst/disks.c fsck_preen`. These functions were therefore excluded from the final preprocessed graph dataset. All other NetBSD candidate functions with sufficient function-level evidence were successfully extracted and retained. The final NetBSD dataset contains 17 positive functions and 85 negative functions.
 
 ---
 
