@@ -20,7 +20,6 @@ This replication package includes:
 * preprocessed graph datasets;
 * scripts for reproducing the main experimental results;
 * baseline scripts for Devign and CodeBERT;
-* graph-encoder comparison scripts for GCN, GAT, GraphSAGE, and the proposed encoder;
 * commands for reproducing the main result tables.
 
 ---
@@ -621,87 +620,6 @@ For each dataset, Table 6 contains:
 
 ---
 
-### Reproducing Table 7: Comparison with Representative Graph Encoders
-
-Table 7 fixes the same framework and input setting:
-
-```text
-local-[50,100]
-CFG/CDG enabled
-```
-
-Only the graph encoder is switched using `--usemodel`.
-
-#### GCN
-
-```bash
-python train_multiscale_local_cfg_cdg_cv5_switchable.py \
-  --data_path netbsd_joern_multirel_func.pkl \
-  --use_cfg 1 \
-  --use_cdg 1 \
-  --n_splits 5 \
-  --threshold_mode fixed \
-  --threshold 0.5 \
-  --local_scales 50,100 \
-  --usemodel GCN
-```
-
-#### GAT
-
-```bash
-python train_multiscale_local_cfg_cdg_cv5_switchable.py \
-  --data_path netbsd_joern_multirel_func.pkl \
-  --use_cfg 1 \
-  --use_cdg 1 \
-  --n_splits 5 \
-  --threshold_mode fixed \
-  --threshold 0.5 \
-  --local_scales 50,100 \
-  --usemodel GAT
-```
-
-#### GraphSAGE
-
-```bash
-python train_multiscale_local_cfg_cdg_cv5_switchable.py \
-  --data_path netbsd_joern_multirel_func.pkl \
-  --use_cfg 1 \
-  --use_cdg 1 \
-  --n_splits 5 \
-  --threshold_mode fixed \
-  --threshold 0.5 \
-  --local_scales 50,100 \
-  --usemodel GraphSAGE
-```
-
-#### Proposed Encoder
-
-Use the Table 5 command:
-
-```bash
-python train_multiscale_local_cfg_cdg_cv5.py \
-  --data_path netbsd_joern_multirel_func.pkl \
-  --use_cfg 1 \
-  --use_cdg 1 \
-  --n_splits 5 \
-  --threshold_mode fixed \
-  --threshold 0.5 \
-  --local_scales 50,100
-```
-
-For Linux or MySQL, replace the dataset path accordingly.
-
-For each dataset, Table 7 contains:
-
-* GCN;
-* GAT;
-* GraphSAGE;
-* the proposed encoder.
-
-All four settings use the same local-[50,100] input, CFG/CDG relation views, 5-fold cross-validation, and fixed threshold 0.5. They differ only in the encoder choice.
-
----
-
 ## Parameter Summary
 
 ### Change Dataset
@@ -734,20 +652,4 @@ Use:
 
 # local + CFG/CDG
 --use_cfg 1 --use_cdg 1
-```
-
-### Change Graph Encoder
-
-For encoder comparison, use:
-
-```bash
---usemodel GCN
---usemodel GAT
---usemodel GraphSAGE
-```
-
-with:
-
-```text
-train_multiscale_local_cfg_cdg_cv5_switchable.py
 ```
