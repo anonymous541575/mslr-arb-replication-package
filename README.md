@@ -58,7 +58,7 @@ For NetBSD, part of the preliminary metadata was obtained through private commun
 | ------- | -----------------: | -----------------: | ----------------------: |
 | Linux   |                  8 |                 40 |                     1:5 |
 | MySQL   |                 39 |                195 |                     1:5 |
-| NetBSD  |                 20 |                100 |                     1:5 |
+| NetBSD  |                 17 |                 85 |                     1:5 |
 
 ---
 
@@ -186,7 +186,7 @@ The following involved files were excluded because they were not marked as aging
 
 ### NetBSD Candidate Bug Filtering
 
-For NetBSD, all candidate bugs used in this study correspond to NetBSD 7.99.21. The official problem reports/fix information provided sufficient function-level evidence for the corresponding faulty functions. Therefore, no candidate NetBSD bug was excluded during the function-level filtering process. The final NetBSD bug/function list is provided in the curated bug/function table below.
+For NetBSD, all candidate bugs used in this study correspond to NetBSD 7.99.21. The official problem reports and fix information provided sufficient function-level evidence for the corresponding faulty functions. However, three candidate functions could not be reliably extracted as Joern-based function-level graph samples due to tool extraction issues: `usr.bin/msgs/msgs.c / ask`, `usr.sbin/sysinst/disks.c / make_filesystems`, and `usr.sbin/sysinst/disks.c / fsck_preen`. These functions were therefore excluded from the final preprocessed graph dataset. All other NetBSD candidate functions with sufficient function-level evidence were successfully extracted and retained. The final NetBSD dataset contains 17 positive functions and 85 negative functions.
 
 ---
 
@@ -297,13 +297,10 @@ Bug ID | Version | File | Function
 | 50300  | 7.99.21 | `src/sys/kern/kern_exit.c`                              | `proc_reparent`        |
 | 50318  | 7.99.21 | `src/sys/kern/kern_synch.c`                             | `suspendsched`         |
 | 50381  | 7.99.21 | `src/sys/fs/tmpfs/tmpfs_subr.c`                         | `tmpfs_construct_node` |
-| 50577  | 7.99.21 | `src/usr.bin/msgs/msgs.c`                               | `ask`                  |
 | 50578  | 7.99.21 | `src/usr.sbin/isdn/isdnd/exec.c`                        | `upd_callstat_file`    |
 | 50579  | 7.99.21 | `src/usr.bin/error/filter.c`                            | `getignored`           |
 | 50666  | 7.99.21 | `src/usr.sbin/lpr/pac/pac.c`                            | `dumpit`               |
 | 50712  | 7.99.21 | `src/usr.bin/showmount/showmount.c`                     | `xdr_exports`          |
-| 50713  | 7.99.21 | `src/usr.sbin/sysinst/disks.c`                          | `make_filesystems`     |
-| 50713  | 7.99.21 | `src/usr.sbin/sysinst/disks.c`                          | `fsck_preen`           |
 | 50714  | 7.99.21 | `src/usr.sbin/sysinst/savenewlabel.c`                   | `savenewlabel`         |
 | 50730  | 7.99.21 | `src/sys/kern/kern_event.c`                             | `kqueue_scan`          |
 | 50730  | 7.99.21 | `src/sys/kern/kern_event.c`                             | `knote_detach`         |
